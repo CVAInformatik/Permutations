@@ -169,6 +169,21 @@ void test1( u64 no, std::string s )
     printf( "%9lu  %s \n", no, res.c_str());
 }
 
+void test2(std::string s)
+{
+    std::string res;
+    u64 t = (u64 ) 1;
+
+    for (uint i = 0; i < 64; i++)
+    {
+        mkAnagram(t, s, res);
+        printf("%2d  %20lu  %s \n",i, t, res.c_str());
+        t |= t << 1;
+    }
+
+}
+
+
 int main()
 {
 
@@ -180,6 +195,8 @@ int main()
    std::string c11("abcdefghijk");
    std::string c20("abcdefghijklmnoprstu");
    std::string c36("abcdefghijklmnoprstuvwxyz0123456789A");
+   	
+   test2(c9);
 
    test1(((u64)9223372036854775807 + (u64)9223372036854775800), c36);
    test1((u64)9223372036854775807 , c36);
