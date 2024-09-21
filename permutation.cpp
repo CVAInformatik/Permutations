@@ -151,6 +151,54 @@ void mkLargeAnagram(const u64 N, const std::string& inp, std::string& outp, uint
         mkAnagram(N1, inp, outp);
 }
 
+//
+//  another try to make large anagrams
+// 
+void deinterLeave(const std::string & inp, std::string & outp)
+{
+    outp.clear();
+    for (int j1 = 1; j1 < inp.size(); j1 += 2) outp.push_back(inp[j1]);
+    for (int j2 = 0; j2 < inp.size(); j2 += 2) outp.push_back(inp[j2]);
+}
+
+void circularShift(uint stride, const std::string& inp, std::string & outp)
+{
+    uint o = 0;
+    for (int k = stride; k < outp.size(); k++) outp[o++] = inp[k];
+    for (int k = 0; k < stride; k++) outp[o++] = inp[k];
+
+}
+
+
+void mkLargeAnagram1(const u64 N, const std::string& inp, std::string& outp, uint stride = 10, uint turns = 5)
+{
+    std::string temp = inp;
+    std::string temp1;
+    std::string buffer;
+    u64  N1 = N;
+
+    uint m = temp.size();
+    if (m > MAXSIMPLE) {
+        for (int t1 = 0; t1 < turns; t1++) {
+
+            deinterLeave(temp, temp1);
+
+            for (int i = 0; i < ((temp.size() / stride) + 1); i++) {
+                mkAnagram(N1, temp1, buffer);
+                for (int j = 0; j < buffer.size();j++)  temp1[j] = buffer[j];
+                circularShift(stride, temp1, temp);
+                temp1 = temp;
+                N1 = N1 + stride;
+            }// here temp1 and temp are equal.
+        }
+        outp = temp;
+    }
+    else
+        mkAnagram(N1, inp, outp);
+}
+
+
+
 
 void test( u64 count, std::string s )
 {
@@ -183,6 +231,28 @@ void test2(std::string s)
 
 }
 
+void test3(u64 no, std::string s)
+{
+    std::string res;
+    mkLargeAnagram1(no, s, res);
+    printf("%18lu  %s \n", no, res.c_str());
+}
+
+
+void test4(u64 no, std::string s)
+{
+    std::string res;
+    mkLargeAnagram1(no, s, res);
+    printf("%18lu  %s \n", no, res.c_str());
+    mkLargeAnagram1(no, res, res);
+    printf("%18lu  %s \n", no, res.c_str());
+    mkLargeAnagram1(no, res, res);
+    printf("%18lu  %s \n", no, res.c_str());
+    mkLargeAnagram1(no, res, res);
+    printf("%18lu  %s \n", no, res.c_str());
+}
+
+
 
 int main()
 {
@@ -196,6 +266,12 @@ int main()
    std::string c20("abcdefghijklmnoprstu");
    std::string c36("abcdefghijklmnoprstuvwxyz0123456789A");
    	
+   	
+   test4(((u64)9223372036854775807 + (u64)9223372036854775800), c36);
+
+ //  test(362880*10, c10)	;
+
+/*   	
    test2(c9);
 
    test1(((u64)9223372036854775807 + (u64)9223372036854775800), c36);
@@ -226,6 +302,7 @@ int main()
    test1(371586864139167857, c20);
    test1(271586864139167857, c20);
    test1(171586864139167857, c20);
+   */
    //test(11*10*LIMIT,c11);
 
 }
