@@ -18,14 +18,14 @@ let rec permutation = function
     
 (*   insert a at pos in l  *)
 let rec 
-      insertAux a pos l acc =  if (pos = 0) then (( List.rev acc) @ a::l )
+      insertAux a pos l acc =  if (pos = 0) then (( List.rev acc) @ a::l )      
                                             else insertAux a (pos -1) (List.tl l)  ((List.hd l )::acc)
    and
-			insert a pos l =  if( pos = 0) then a::l  else insertAux a  pos  l [];;
-      
-let rec permuteAux   li n   acc =
+			insert a pos l =  if( pos = 0) then a::l  else insertAux a  pos  l []
+   and   
+      permuteAux   li n   acc =
       match li with 
-      |  [] -> acc
+      |  [] -> List.rev acc
       | hd::tl  -> 
       let  p = (List.length acc) 
            in let pos = ( n mod (p+1))
