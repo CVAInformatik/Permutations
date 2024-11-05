@@ -1,6 +1,6 @@
 # Permutations
 Permutation/Anagram Function
 
-Program to generate permuation/anagrams of an inputstring in a systemic manner, with very little memory overhead. 
+Program to generate permutations/anagrams of a list or an inputstring in a systematic manner, with very little memory overhead. 
 
 
