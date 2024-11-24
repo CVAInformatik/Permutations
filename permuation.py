@@ -61,45 +61,52 @@ def printHands( hands):
 
 
 def find0(aPermutation) :
-		for n in range( 0, len(aPermutation) ):
-			if( aPermutation[n] == 0) :
-			   return n;
-		return -1 ;
+    for n in range( 0, len(aPermutation) ):
+      if( aPermutation[n] == 0) :
+         return n
+    return 0 
 
 	  
 def  remove0( aPermutation) :
-		res = []
-		for n in range( 0, len(aPermutation) ):
-			if( aPermutation[n] != 0): res.append(aPermutation[n]-1)
-		return res
+    res = [];
+    for n in range( 0, len(aPermutation)):
+      if( aPermutation[n] != 0): res.append(aPermutation[n]-1)
+    return res
 		
 # returns the permutation index when given a permuation of [0,1,2,3,..n-1];
 # findN( permuation( N, [0,1,2,3,...n-1)); 
 # should return  N 
 
 def findN(aPermutation) :
-		return _findN(aPermutation.copy(), 0, 0, 0)
+    return _findN(aPermutation.copy(), 0)
 			
-def _findN(aPerm, ll, offset, increment) :
-	  match len(aPerm) :
-	  	case 0: 
-	  		return ll;
-	  	case 1: 
-	  		return ll;
-	  	case 2: 
-	  			if( ll %	2 == 0) :
-	  						return ll+aPerm[0];
-	  			else :
-	  						return ll+aPerm[1];
-	  	case _ : 
-					pos  = find0(aPerm);
-					alen = len(aPerm);
-					fac_alen_minus_1 = math.factorial(alen-1);
-					if( ((pos * fac_alen_minus_1) +offset ) < ll):
-						if (increment == 0):
-									return _findN( aPerm, ll, ll, pos* fac_alen_minus_1);
-						else:
- 	 				   			return _findN( aPerm, ll, incremetn + offset, increment);
-					else:
-						      return _findN( remove0(aPerm),(pos* fac_alen_minus_1)+offset, 0,0 ) ;
+def _findN(aPerm, ll) :
+    alen = len(aPerm);
+    match alen :
+      case 0: 
+         return 0;	  		
+      case 1:	
+         return 0;
+      case 2:	
+         if( (aPerm[0]) == 0):
+            return ll
+         else:
+            return ll+1	  				
+      case _:	
+         pos = find0(aPerm)
+         fac_alen_minus_1 = math.factorial(alen-1)
+         aPerm_ = remove0(aPerm.copy())
+         return _findN( aPerm_, ll + ( pos * fac_alen_minus_1))
 
+def Pos( N, aPerm):
+    for n in range( 0, len(aPerm) ):
+       if( aPerm[n] == N):
+            return n
+    return -1 
+    
+def Inverse( aPerm ):
+    res = [];
+    for n in range( 0,  len(aPerm)):
+         res.append( Pos(n, aPerm)) 	  
+    return res
+    

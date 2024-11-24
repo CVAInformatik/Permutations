@@ -74,27 +74,59 @@ let rec fac len res =
            then res
            else fac (len-1) (len *res)
 
-
-        
-let rec findNaux alist ll offset  increment =
-			  let () = Printf.printf "findNaux:0 ll %d offset %d   increment %d \n" ll offset  increment  in  
+let rec findNaux alist ll   =
         match alist with
-        | [] -> ll
-        | [0] -> ll
-        | [0;1] -> if( 0 = (ll mod 2)) then ll else (ll + 1)
-        | [1;0] -> if( 0 = (ll mod 2)) then (ll + 1 ) else ll 
+        | [] -> 0
+        | [0] -> 0
+        | [0;1] -> ll
+        | [1;0] -> (ll+1)
         |  _    -> 
                 let pos = find0 alist in
         				let alen = (List.length alist) in
-        				let fac_alen_minusOne = (fac (alen - 1) 1)  in   
-				(* )			  let () = Printf.printf "findNaux:1 pos %d  alen %d fac_alen_minusOne %d \n" pos alen fac_alen_minusOne  in  *)
-        				if( ((pos*fac_alen_minusOne) + offset ) < ll) 
-           					then if (increment = 0 ) 
-           								then findNaux alist  ll   (offset + (fac_alen_minusOne * alen))  (fac_alen_minusOne * alen)
-           								else findNaux alist  ll  ( increment  + offset )   increment
-					 					else findNaux (remove0 alist)  ((pos*fac_alen_minusOne) + offset) 0  0
+                findNaux (remove0 alist) (ll + pos * (fac (alen - 1) 1)  )
 
-let rec findN alist = findNaux alist  0 0  0
+let rec findN alist = findNaux alist  0 ;;
 
+let rec pos1 ix alist counter =
+       match alist with 
+       | [] ->  -1
+       | hd::tl -> if( ix = hd) 
+                   then counter
+                   else pos1 ix tl (counter+1)
 
+let rec pos ix alist = pos1 ix alist 0
+     
+let rec findInverse1 alist blist ix acc =
+					 match alist with
+					 | [] -> List.rev acc 
+					 | ahd::atl -> findInverse1 atl blist (ix+1) ( (pos ix blist)::acc)
 					 
+let rec findInverse alist =
+					 findInverse1 alist alist 0 [] 
+					 
+					 
+let a = permute [0;1;2;3]	0;;
+a;;
+permute [0;1;2;3]	1;;
+permute [0;1;2;3]	2;;
+permute [0;1;2;3]	3;;
+permute [0;1;2;3]	4;;
+permute [0;1;2;3]	5;;
+permute [0;1;2;3]	6;;
+permute [0;1;2;3]	7;;
+permute [0;1;2;3]	8;;
+permute [0;1;2;3]	9;;
+permute [0;1;2;3]	10;;
+permute [0;1;2;3] 11;;
+permute [0;1;2;3]	12;;
+permute [0;1;2;3]	13;;
+permute [0;1;2;3]	14;;
+permute [0;1;2;3]	15;;
+permute [0;1;2;3]	16;;
+permute [0;1;2;3]	17;;
+permute [0;1;2;3]	18;;
+permute [0;1;2;3]	19;;
+permute [0;1;2;3]	20;;
+permute [0;1;2;3]	21;;
+permute [0;1;2;3] 22;;
+permute [0;1;2;3]	23;;
